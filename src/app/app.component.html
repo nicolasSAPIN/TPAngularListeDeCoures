@@ -1,0 +1,63 @@
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Courses par Nicolas SAPIN</title>
+	<link rel="stylesheet"
+	 href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+ 
+  <div class="ml-5">
+    <h4>TP ANGULAR</h4>
+    <h6>Nicolas SAPIN</h6>
+    <p><span>Creation d'un module pour gerer une liste de courses:</span></p>
+    <p><span>Ajout - suppression -modification d'un article dans un liste d'articles</span></p>
+    <p><span>Sauvegarde de la liste dans le local storage du navigateur (chrome)</span></p>
+    <p><span>Supplement 1: En cliquant sur le boutton ci-dessous une liste d'articles est générée</span></p>
+    <button  (click)="onGenerateListe()" id="btnGenerateListe" class="btn btn-outline-primary  ml-5" alt="Generer une liste pour la demo" title="Generer une liste pour la demo"><i class="fa fa-list-alt"></i></button>
+    <p><span>Supplement 2: Le boutton ci-dessous fait un RESET de la liste d'articles</span></p>
+    <button  (click)="onResetListe()" id="btnResetListe" class="btn btn-outline-danger  ml-5" alt="Reset de la liste" title="Reset de la liste"><i class="fa fa-sign-out-alt"></i></button>
+  </div>
+  
+  
+  <div class="container table-responsive-md">
+    <div class="row">
+      <div  class="col-8 mt-5">
+        <input [(ngModel)]="article" placeholder="Ajouter un article" class="form-control">
+        <!--si isUpdate=true on passe l'indice de l'arcticle a modifier-->
+        <input *ngif="isUpdate" type="hidden" [(ngModel)]="id" value="id" >
+        <br />
+        <!--Le ngIf permet dans notre cas d'afficher soit un boutton soit l'autre en fonction des valeurs de iscreate et isupdate -->
+        <button *ngIf ="isCreate;" (click)="onAjouter()" id="btnCreate" class="btn btn-outline-success" alt="Ajouter" title="Ajouter"><i class="fa fa-plus-circle"></i></button>
+        <button *ngIf ="isUpdate;" (click)="onUpdate(id)" id="btnUpdate" class="btn btn-success" alt="Modifier" title="Modifier"><i class="fas fa-save"></i></button>
+        <!-- le site guide-angular.wishtack.io deconseil l'utilisation du *ngIfThenElse -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-2 col-6 mt-3 ">      
+        <table>
+          <thead class="table-primary" >
+            <th scope="col" colspan="3">Liste de courses:</th>
+          </thead>
+          <tbody>
+            <!--Parcours de la liste des articles présents dans la liste des articles (tableau du local storage)-->
+            <tr *ngFor="let article of articles;let i = index">            
+              <td class="">
+                {{article}}
+              </td>
+              <td>            
+                <button (click)="onEdit(i)" class="btn btn-outline-warning" alt="Editer" title="Editer"><i class="fas fa-edit"></i></button>
+              </td>
+              <td>   
+                <button (click)="onDelete(i)" class="btn btn-outline-danger" alt="Supprimer" title="Supprimer"><i class="fas fa-trash"></i>
+               </button>
+              </td>
+            </tr>        
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
